@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Cek apakah pinjol/pindar berizin OJK dan hitung apakah penghasilanmu cukup sebelum meminjam. Prototype.">
+  <title>PinjolGuard · Cek Pinjol Legal</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">🛡️</span>
+        <h1>PinjolGuard</h1>
+        <span class="pill">prototype</span>
+      </div>
+      <button type="button" id="clear" class="ghost" title="Hapus seluruh percakapan dan data yang kamu ketik">Hapus chat</button>
+    </header>
+
+    <div id="fatal" class="banner fatal" role="alert" hidden></div>
+
+    <div id="log" class="log" role="log" aria-live="polite" aria-label="Percakapan dengan PinjolGuard"></div>
+
+    <div id="chips" class="chips" aria-label="Balasan cepat"></div>
+
+    <form id="form" class="composer" autocomplete="off">
+      <label class="sr-only" for="input">Ketik pesan</label>
+      <input id="input" type="text" inputmode="text" enterkeyhint="send" maxlength="500"
+             placeholder="Ketik di sini…" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="submit" class="send">Kirim</button>
+    </form>
+
+    <p class="note">
+      Yang kamu ketik diproses di browser ini saja dan tidak dikirim ke server mana pun.
+      Bukan nasihat keuangan resmi.
+    </p>
+  </main>
+
+  <noscript><p class="banner fatal">Halaman ini butuh JavaScript untuk berjalan.</p></noscript>
+
+  <!-- Kalau modul tidak jalan (mis. halaman dibuka langsung dari file://), beri petunjuk yang jelas. -->
+  <script>
+    setTimeout(function () {
+      if (window.__pinjolBooted) return;
+      var el = document.getElementById("fatal");
+      el.hidden = false;
+      el.textContent = "Halaman gagal dimulai. Kalau kamu membukanya langsung dari file, jalankan lewat server lokal: " +
+        "python tools/build_web.py lalu python -m http.server -d _site 8080, kemudian buka http://localhost:8080";
+    }, 2500);
+  </script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
